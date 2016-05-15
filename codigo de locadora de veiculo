@@ -1,0 +1,208 @@
+#include <stdio.h>
+#include <conio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int i=0, j=0;
+char tecla;
+
+struct cadastro_cliente
+  {
+	  int cod;
+	  char nome [40];
+	  char rua [30];
+	  int numero;
+	  int cpf;
+	  char bairro [30];
+	  char cidade [30];
+	  int codigocar;
+  };
+
+struct cadastro_cliente Cliente[50];
+
+struct cadastro_carro
+  {
+	  int codcar;
+	  char modelo [20];
+	  char marca [15];
+	  char placa [15];
+	  int status;
+  };
+
+struct cadastro_carro Carro[50];
+
+int cad_cliente(void);
+int list_cliente(void);
+int cad_carro(void);
+int loc_carro(void);
+int mostra_clientes(void);
+int devo_carro(void);
+
+int cad_cliente (void)
+{
+   clrscr();
+   printf("Cadastro %d de 50\n", j);
+   if (j<50)
+	  {
+		printf("Digite o codigo do Cliente: ");
+		scanf("%d", &Cliente[j].cod);
+				fflush(stdin);
+		printf("Digite o nome do Cliente: ");
+		gets(Cliente[j].nome);
+		printf("Digite o CPF do Cliente: ");
+		scanf("%d", &Cliente[j].cpf);
+				fflush(stdin);
+		printf("Digite o nome da Rua: ");
+				gets(Cliente[j].rua);
+		fflush(stdin);
+		printf("Digite o numero da casa: ");
+		scanf("%d", &Cliente[j].numero);
+		fflush(stdin);
+		printf("Digite o nome do Bairro: ");
+		gets(Cliente[j].bairro);
+				fflush(stdin);
+		printf("Digite o nome da Cidade: ");
+		gets(Cliente[j].cidade);
+		j++;
+	  }
+   return(0);
+}
+
+int list_cliente (void)
+{
+  int k=0;
+  clrscr();
+  if(Cliente[k].cod != 0)
+	   {
+	k++;
+	printf("\nNome do Cliente: %s\n", Cliente[k].nome);
+	getch();
+	   }
+  return (0);
+}
+
+int cad_carro (void)
+{
+  clrscr();
+  printf("Cadastro de carro %d de 50\n", i);
+  if(i<50)
+	{
+	 printf("Digite o codigo do veiculo: ");
+	 scanf("%d", &Carro[i].codcar);
+	 fflush(stdin);
+	 printf("Digite o modelo do carro: ");
+	 gets(Carro[i].modelo);
+	 fflush(stdin);
+	 printf("Digite a marca do carro: ");
+	 gets(Carro[i].marca);
+	 fflush(stdin);
+	 printf("Digite a placa do carro: ");
+	 gets(Carro[i].placa);
+	 i++;
+	}
+  return(0);
+}
+
+int loc_carro (void)
+{
+  clrscr();
+  int k=0;
+  char consulta[40];
+  char resposta;
+  int codi;
+  fflush(stdin);
+  printf("Digite o nome do cliente que quer locar um veiculo: ");
+  gets(consulta);
+  Reconsulta:
+  for(k=0; k<50; k++)
+  {
+	if(consulta == Cliente[k].nome);
+	{
+	  printf("Cliente cadastrado, deseja locar veiculo s/n: ");
+	  scanf("%c", &resposta);
+	  if(resposta == 's')
+		{
+		  printf("Digite o codigo do Carro: ");
+		  scanf("%d", &codi);
+		  Cliente[k].codigocar=codi;
+		  Carro[k].status= 1;
+		};
+	 };
+   };
+   printf("Cliente nao Cadastrado");
+   return(0);
+}
+
+int mostra_clientes (void)
+{
+  clrscr();
+	for (j=0; j<50; j++)
+	{
+	   if(Cliente[j].codigocar != 0)
+		{
+		   printf("Cliente: %c", Cliente[i].nome);
+		   printf("Marca do veiculo: %c", Carro[i].marca);
+		}
+	}
+  return(0);
+}
+
+int devo_carro (void)
+{
+  clrscr();
+  char dev, devolucao[40];
+  printf("Digite o Nome do Cliente que vai devolver o veiculo: ");
+  scanf("%c", &devolucao);
+  for (i=0; i<50; i++)
+   {
+	if(devolucao == Cliente[i].nome)
+	  {
+		printf("Realizar devolucao s/n? ");
+		scanf("%c", &dev);
+		if (dev == 's')
+		  {
+			Cliente[i].codigocar=0 ;
+			Carro[i].status=0;
+		  }
+	  }
+   }
+  return(0);
+}
+
+int main (void)
+{
+  clrscr();
+  int opcao=0;
+  while(opcao<8)
+  {
+	clrscr();
+	printf("\n\nLOCADORA DE VEICULOS\n");
+	printf("..................\n\n");
+	printf("1 - CADASTRAR CLIENTE\n");
+	printf("2 - LISTAR CLIENTES CADASTRADOS\n");
+	printf("3 - CADASTRAR CARRO\n");
+	printf("4 - LOCAR CARRO\n");
+	printf("5 - CLIENTES COM CARROS LOCADOS\n");
+	printf("6 - DEVOLUCAO DE CARRO\n");
+	printf("7 - SAIR\n");
+	printf("Escolha uma op‡Æo:");
+	fflush(stdin);
+	scanf("%d", &opcao);
+	switch(opcao)
+	  {
+		  case 1: cad_cliente(); break;
+		  case 2: list_cliente(); break;
+		  case 3: cad_carro(); break;
+		  case 4: loc_carro(); break;
+		  case 5: mostra_clientes(); break;
+		  case 6: devo_carro(); break;
+		  case 7: exit(0); break;
+		  default: printf("\nop‡Æo invalida - tecle <enter>");
+		  fflush(stdin);
+		  while ((tecla=getchar())!='\r')
+		  break;
+	  }/*fim do swith*/
+  }/*fim do while*/
+  getch();
+  return(0);
+}
